@@ -54,6 +54,7 @@ for i in range(1,10):
     index = str(i)
     game_board[index] = 0
 
+#################################
 
 def first_player():
     """Roll two 10-sided dice, larger number wins, tie goes to player 2."""
@@ -65,8 +66,8 @@ def first_player():
     return 0 # Player 1
 
 
-
 def pause():
+    """Generic pager to pause output and wait for user."""
     input("\nPress enter to continue.")
     return True
 
@@ -223,8 +224,7 @@ def play_game(game_number, first_turn_player):
 
     if winner:
         (winning_player, direction, start_square) = winner
-        print("Tic Tac Toe!")
-        print()
+        print("Tic Tac Toe!\n")
         print(f"{player[winning_player]['name']} won with three in a {direction} starting on square {start_square}.")
         player[active_player]['score'] += 1
     elif end_game:
@@ -267,7 +267,8 @@ def main():
     # Randomly pick who will go first on Game 1. 
     # Subsequent games will alternate players for first move.
     first_turn = first_player() 
-    print()
+    print(f"\n{player_color[first_turn+1]}{player[first_turn+1]['name']}{normal_color} will go first.")
+    pause()
     game_number = 1
 
     while not quit_game:
