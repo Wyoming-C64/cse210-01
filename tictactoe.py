@@ -250,8 +250,8 @@ def play_again():
     while not valid_choice:
         user_choice = input("\nWould you like to play again? ").capitalize()[0]
         if user_choice not in ['N','Y']:
-            print(f"{error_color}A Yes or No response is appropriate here...")
-            print(f"If that's too hard, just enter a {hilite_color}Y{error_color} or {hilite_color}N{error_color}.{normal_color}\n")
+            print(f"{error_color}A {hilite_color}Yes{normal_color} or {hilite_color}No{normal_color} response is appropriate here...")
+            print(f"If that's too hard, just enter a {hilite_color}Y{error_color} or {hilite_color}N{error_color}.{normal_color}")
         else:
             valid_choice = True
     return user_choice == 'Y'
