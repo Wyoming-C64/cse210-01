@@ -60,7 +60,7 @@ def pause():
 
 def get_player_name(player_num):
     """Query a particular player for his or her name."""
-    temp_name = input(f"Player {player_num}, please enter your name: ")
+    temp_name = input(f"{player_color[player_num]}Player {player_num}{normal_color}, please enter your name: ")
     return temp_name
 
 
