@@ -4,7 +4,37 @@
 # 25-Apr-2022
 
 # define some "constants"
-CLEARSCREEN = chr(27) + '[2J'
+clearscreen = chr(27) + '[2J'
+
+# Colors
+black =     chr(27) + "[0;30m"
+dkgrey =    chr(27) + "[1;30m"
+grey =      chr(27) + "[0;37m"
+white =     chr(27) + "[1;37m"
+
+dkred =     chr(27) + "[0;31m"
+dkyellow =  chr(27) + "[0;33m"
+dkgreen =   chr(27) + "[0;32m"
+dkcyan =    chr(27) + "[0;36m"
+dkblue =    chr(27) + "[0;34m"
+dkmagenta = chr(27) + "[0;35m"
+
+red =       chr(27) + "[1;31m"
+yellow =    chr(27) + "[1;33m"
+green =     chr(27) + "[1;32m"
+cyan =      chr(27) + "[1;36m"
+blue =      chr(27) + "[1;34m"
+magenta =   chr(27) + "[1;35m"
+
+# Color Theme
+normal_color = grey
+hilite_color = white
+error_color = red
+player_color = [grey, yellow, green]
+game_board_color = grey
+sq_num_color = dkblue
+score_color = white
+title_color = white
 
 # Need to set up some basic variables to track number of moves
 # the game board, maybe a running score of games won, lost, tied
@@ -36,33 +66,35 @@ def get_player_name(player_num):
 
 def display_game_board():
     """Displays the current state of the game board."""
-    print(CLEARSCREEN)
-    print("Game Board:\n")
+    print(clearscreen)
+    print(f"{title_color}Game Board:{normal_color}\n")
     for row in range(0, 3):
-        print("+---+---+---+")
+        print(f"{game_board_color}+---+---+---+")
         print("|",end='')
         for square in range(1+(3*row), 4+(3*row)):
-            temp_token = game_tokens[game_board[ str(square) ]]
-            if temp_token == ' ':
-                temp_token = str(square)
+            sq_owner = game_board[ str(square) ]
+            temp_token = player_color[sq_owner] + game_tokens[sq_owner] + game_board_color
+            if sq_owner == 0:
+                temp_token = sq_num_color + str(square) + game_board_color
             print(f" {temp_token} |",end='')
         print()
-    print("+---+---+---+\n")
+    print(f"+---+---+---+{normal_color}")
+    print()
 
 
 def title(): 
     """Display a title and welcome screen."""
 
-    print(CLEARSCREEN)
-    print("""
-TIC TAC TOE
+    print(clearscreen)
+    print(f"""
+{title_color}TIC TAC TOE
 
-by Mike Lewis - CSE 210 Section 8
+by Mike Lewis - CSE 210 Section 8{normal_color}
 
-Welcome to the classic game of Tic Tac Toe. One player will be X
-and the other player will be O. First one to get three marks
-in a straight line (horizontal, vertical, or diagonal) wins
-the game... Otherwise, it's a tie.
+Welcome to the classic game of Tic Tac Toe. One player will be {player_color[1]}X{normal_color}
+and the other player will be {player_color[2]}O{normal_color}. First one to get three marks in a 
+straight line (horizontal, vertical, or diagonal) wins the game... 
+... Otherwise, it's a tie.
     """)
 
 
@@ -85,17 +117,16 @@ def get_move(player_num):
     Once valid input is entered, returns the player's choice."""
     valid_move = False
     while not valid_move:
-        player_move = input(f"{player[player_num]['name']}, please choose a square for your next move: ")
+        player_move = input(f"{player_color[player_num]}{player[player_num]['name']}{normal_color}, please choose a square for your next move: ")
         if player_move < '1' or player_move > '9':
-            print("You need to enter a square numbered 1 through 9. Try again.")
+            print(f"{error_color}You need to enter a square numbered 1 through 9. Try again.{normal_color}")
             valid_move = False
         elif game_board[player_move] != 0:
-            print("Sorry, that square is already occupied. Choose an empty square.")
+            print(f"{error_color}Sorry, that square is already occupied. Choose an empty square.{normal_color}")
             valid_move = False
         else:
             valid_move = True
-        
-    print(f"Okay, putting an {game_tokens[player_num]} in square {player_move}.")
+
     return player_move
 
 
@@ -172,7 +203,6 @@ def play_game():
         print("Tic Tac Toe!")
         print()
         print(f"{player[winning_player]['name']} won with three in a {direction} starting on square {start_square}.")
-        print()
         player[active_player]['score'] += 1
     elif end_game:
         print("Winner: NONE.")
@@ -181,9 +211,9 @@ def play_game():
 
 
 def display_score():
-    print("--- Standings So Far ---")
+    print(title_color + "--- Standings So Far ---" + normal_color)
     for i in range(0,3):
-        print(f"{player[i]['name']}:\t{player[i]['score']}".expandtabs(15))
+        print(f"{player_color[i]}{player[i]['name']}:\t{hilite_color}{player[i]['score']}{normal_color}".expandtabs(15))
     
       
 def play_again():
@@ -191,7 +221,8 @@ def play_again():
     while not valid_choice:
         user_choice = input("\nWould you like to play again? ").capitalize()[0]
         if user_choice not in ['N','Y']:
-            print("A Yes or No response is appropriate here... If that's too hard, just enter a 'Y' or 'N'.\n")
+            print(f"{error_color}A Yes or No response is appropriate here...")
+            print(f"If that's too hard, just enter a {hilite_color}Y{error_color} or {hilite_color}N{error_color}.{normal_color}\n")
         else:
             valid_choice = True
     return user_choice == 'Y'
