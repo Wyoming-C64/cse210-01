@@ -277,6 +277,7 @@ def main():
         game_number = game_number + 1
         quit_game = not play_again()
         
+    print("\nThank you for playing. See you later!\n")
 
 if __name__ == "__main__":
     main()  
