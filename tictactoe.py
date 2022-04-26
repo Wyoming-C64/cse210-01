@@ -3,6 +3,8 @@
 # CSE-210 Section 8  
 # 25-Apr-2022
 
+from random import randint
+
 # define some "constants"
 clearscreen = chr(27) + '[2J'
 
@@ -53,6 +55,17 @@ for i in range(1,10):
     game_board[index] = 0
 
 
+def first_player():
+    """Roll two 10-sided dice, larger number wins, tie goes to player 2."""
+    dice_1 = randint(1,10)
+    dice_2 = randint(1,10)
+    if dice_2 >= dice_1:
+        return 1 # Player 2
+    # Failsafe else...
+    return 0 # Player 1
+
+
+
 def pause():
     input("\nPress enter to continue.")
     return True
@@ -64,10 +77,10 @@ def get_player_name(player_num):
     return temp_name
 
 
-def display_game_board():
+def display_game_board(game_num):
     """Displays the current state of the game board."""
     print(clearscreen)
-    print(f"{title_color}Game Board:{normal_color}\n")
+    print(f"{title_color}Game No. {game_num}{normal_color}\n")
     for row in range(0, 3):
         print(f"{game_board_color}+---+---+---+")
         print("|",end='')
@@ -176,18 +189,28 @@ def reset_board():
         game_board[index] = 0
 
 
-def play_game():
-
+def play_game(game_number, first_turn_player):
+    """A looping routine to carry out the gameplay:
+        1. Display the game field.
+        2. Ask the current player which move they would like to make.
+        3. Update the game filed.
+        4. Check for win.
+        5. Check for no-win endgame.
+        6. Move to next player
+        7. Repeat until 4 or 5 is true."""
 # Set up a few things
     winner = False      # Flag if there is a winner
     end_game = False    # Flag if we've reached the end of the game
     game_moves = 0      # Track the total moves played. If == 9, then end_game = True
-    player_turn = 0
+
+    # The first turn is determined in the main routine. 
+    # Random for first game, alternating in subsequent games
+    player_turn = first_turn_player
     reset_board()
 
 # BEGIN GAME LOOP between two players
     while not winner and not end_game:
-        display_game_board()
+        display_game_board(game_number)
         active_player = player_turn + 1 
         player_move = get_move(active_player)
         set_square(player_move, active_player)
@@ -196,7 +219,7 @@ def play_game():
         end_game = game_moves == 9
         player_turn = next_turn(player_turn)
 
-    display_game_board()
+    display_game_board(game_number)
 
     if winner:
         (winning_player, direction, start_square) = winner
@@ -211,13 +234,18 @@ def play_game():
     print()
 
 
-def display_score():
-    print(title_color + "--- Standings So Far ---" + normal_color)
+def display_score(game_num):
+    """Display the scoreboard."""
+    game_plural = "Games"
+    if game_num == 1:
+        game_plural = "Game"
+    print(f"{title_color}--- After {game_num} {game_plural} ---{normal_color}")
     for i in range(0,3):
         print(f"{player_color[i]}{player[i]['name']}:\t{hilite_color}{player[i]['score']}{normal_color}".expandtabs(28))
     
       
 def play_again():
+    """Find out if the players would like to play additional games."""
     valid_choice = False
     while not valid_choice:
         user_choice = input("\nWould you like to play again? ").capitalize()[0]
@@ -235,12 +263,20 @@ def main():
 
     for p in range(1, 3):
         player[p]['name'] = get_player_name(p)
-    
-    while not quit_game:
-        play_game()
-        display_score()
-        quit_game = not play_again() 
 
+    # Randomly pick who will go first on Game 1. 
+    # Subsequent games will alternate players for first move.
+    first_turn = first_player() 
+    print()
+    game_number = 1
+
+    while not quit_game:
+        play_game(game_number, first_turn)
+        display_score(game_number)
+        first_turn = next_turn(first_turn)
+        game_number = game_number + 1
+        quit_game = not play_again()
+        
 
 if __name__ == "__main__":
     main()  
