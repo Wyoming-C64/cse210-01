@@ -1,4 +1,4 @@
-# cse210-tictactoe
+# cse210-01
 
 _Tic Tac Toe  
 by Mike Lewis  
@@ -7,7 +7,7 @@ CSE-210 Section 8
 
 > Tic-Tac-Toe  
 > Love is a game of tic-tac-toe,  
-> Constantly waiting for the next x or o.
+> Constantly waiting for the next x or o.  
     _- Lang Leav -_
 
 ## Overview
