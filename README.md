@@ -76,4 +76,4 @@ Make the game in any way you like. A few ideas are as follows.
 - [x] Enhanced input validation with user-friendly messages.
 - [x] Enhanced game over messages (x's, o's or draw).
 - [ ] Enhanced board size (4x4, 5x5, 6x6 grid, or user selected!)
-- [ ] Enhanced game display (different colors for each player)
+- [x] Enhanced game display (different colors for each player)
