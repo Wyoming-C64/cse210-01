@@ -131,8 +131,8 @@ def get_move(player_num):
     valid_move = False
     while not valid_move:
         player_move = input(f"{player_color[player_num]}{player[player_num]['name']}{normal_color}, please choose a square for your next move: ")
-        if player_move < '1' or player_move > '9':
-            print(f"{error_color}You need to enter a square numbered 1 through 9. Try again.{normal_color}")
+        if player_move < '1' or player_move > '9' or len(player_move) > 1:
+            print(f"{error_color}Valid inputs are the numbers {hilite_color}1{error_color} through {hilite_color}9{error_color}. Try again.{normal_color}")
             valid_move = False
         elif game_board[player_move] != 0:
             print(f"{error_color}Sorry, that square is already occupied. Choose an empty square.{normal_color}")
@@ -250,7 +250,7 @@ def play_again():
     while not valid_choice:
         user_choice = input("\nWould you like to play again? ").capitalize()[0]
         if user_choice not in ['N','Y']:
-            print(f"{error_color}A {hilite_color}Yes{normal_color} or {hilite_color}No{normal_color} response is appropriate here...")
+            print(f"{error_color}A {hilite_color}Yes{error_color} or {hilite_color}No{error_color} response is appropriate here...")
             print(f"If that's too hard, just enter a {hilite_color}Y{error_color} or {hilite_color}N{error_color}.{normal_color}")
         else:
             valid_choice = True
