@@ -30,7 +30,7 @@ magenta =   chr(27) + "[1;35m"
 normal_color = grey
 hilite_color = white
 error_color = red
-player_color = [grey, yellow, green]
+player_color = [grey, yellow, magenta]
 game_board_color = grey
 sq_num_color = dkblue
 score_color = white
@@ -41,7 +41,7 @@ title_color = white
 # etc.
 
 player = {}
-player[0] = {'name': 'Tie Games', 'score': 0 }
+player[0] = {'name': 'Draws', 'score': 0 }
 player[1] = {'name': 'Player 1', 'score': 0 }
 player[2] = {'name': 'Player 2', 'score': 0 }
 
@@ -197,7 +197,7 @@ def play_game():
         player_turn = next_turn(player_turn)
 
     display_game_board()
-    print("Game Over!")
+
     if winner:
         (winning_player, direction, start_square) = winner
         print("Tic Tac Toe!")
@@ -205,6 +205,7 @@ def play_game():
         print(f"{player[winning_player]['name']} won with three in a {direction} starting on square {start_square}.")
         player[active_player]['score'] += 1
     elif end_game:
+        print("Game Over!")
         print("Winner: NONE.")
         player[0]['score'] += 1
     print()
@@ -213,7 +214,7 @@ def play_game():
 def display_score():
     print(title_color + "--- Standings So Far ---" + normal_color)
     for i in range(0,3):
-        print(f"{player_color[i]}{player[i]['name']}:\t{hilite_color}{player[i]['score']}{normal_color}".expandtabs(15))
+        print(f"{player_color[i]}{player[i]['name']}:\t{hilite_color}{player[i]['score']}{normal_color}".expandtabs(28))
     
       
 def play_again():
