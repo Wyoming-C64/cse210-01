@@ -250,8 +250,8 @@ def display_score(game_num):
 def play_again():
     """Find out if the players would like to play additional games."""
     valid_choice = False
-    user_choice = ""
     while not valid_choice:
+        user_choice = ""
         while len(user_choice) < 1:
             user_choice = input("\nWould you like to play again? ").strip().capitalize()
             if len(user_choice) < 1:
