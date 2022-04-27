@@ -75,6 +75,9 @@ def pause():
 def get_player_name(player_num):
     """Query a particular player for his or her name."""
     temp_name = input(f"{player_color[player_num]}Player {player_num}{normal_color}, please enter your name: ")
+    # Check if the user entered a useless empty string, if so then default to "Player X"
+    if temp_name.strip() == "":
+        temp_name = "Player " + str(player_num)
     return temp_name
 
 
@@ -247,8 +250,12 @@ def display_score(game_num):
 def play_again():
     """Find out if the players would like to play additional games."""
     valid_choice = False
+    user_choice = ""
     while not valid_choice:
-        user_choice = input("\nWould you like to play again? ").capitalize()[0]
+        while len(user_choice) < 1:
+            user_choice = input("\nWould you like to play again? ").strip().capitalize()
+            if len(user_choice) < 1:
+                print(f"{error_color}Your silence is deafening. Please type something.{normal_color}")
         if user_choice not in ['N','Y']:
             print(f"{error_color}A {hilite_color}Yes{error_color} or {hilite_color}No{error_color} response is appropriate here...")
             print(f"If that's too hard, just enter a {hilite_color}Y{error_color} or {hilite_color}N{error_color}.{normal_color}")
