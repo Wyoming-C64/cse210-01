@@ -78,6 +78,7 @@ def get_player_name(player_num):
     # Check if the user entered a useless empty string, if so then default to "Player X"
     if temp_name.strip() == "":
         temp_name = "Player " + str(player_num)
+        print("No name entered... Default will be used.")
     return temp_name
 
 
