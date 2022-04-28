@@ -229,7 +229,8 @@ def play_game(game_number, first_turn_player):
     if winner:
         (winning_player, direction, start_square) = winner
         print("Tic Tac Toe!\n")
-        print(f"{player[winning_player]['name']} won with three in a {direction} starting on square {start_square}.")
+        print(f"{player_color[winning_player]}{player[winning_player]['name']}{normal_color} won with " +
+                f"three in a {direction} starting on square {start_square}.")
         player[active_player]['score'] += 1
     elif end_game:
         print("Game Over!")
